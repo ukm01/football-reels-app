@@ -1,6 +1,6 @@
 'use client';
 import Reels from './components/Reels';
-const API_BASE = process.env.NEXT_PUBLIC_API_URL
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default function Home() {
   return (
