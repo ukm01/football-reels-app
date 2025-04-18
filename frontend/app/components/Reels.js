@@ -1,5 +1,5 @@
 'use client';
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+// const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 import { useEffect, useState } from 'react';
 
@@ -8,7 +8,7 @@ export default function Reels() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/videos`)
+    fetch("https://backend-9siodtkjs-ujjwal-mishras-projects-8b666590.vercel.app/api/videos")
       .then((res) => res.json())
       .then((data) => {
         setVideos(data);
