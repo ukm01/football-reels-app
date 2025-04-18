@@ -1,5 +1,5 @@
 'use client';
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 import { useEffect, useState } from 'react';
 
@@ -8,7 +8,7 @@ export default function Reels() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${BASE_URL}/api/videos`)
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/videos`)
       .then((res) => res.json())
       .then((data) => {
         setVideos(data);

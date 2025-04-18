@@ -1,6 +1,6 @@
 'use client';
 import Reels from './components/Reels';
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ;
+// const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ;
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
       <button
   onClick={async () => {
     try {
-      await fetch(`${BASE_URL}/api/generate`);
+      await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/generate`);
       alert('Video generation started!');
     } catch (err) {
       alert('Failed to trigger generation');
