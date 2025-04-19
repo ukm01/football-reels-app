@@ -11,7 +11,7 @@ export default function Home() {
       <button
   onClick={async () => {
     try {
-      await fetch("https://backend-9siodtkjs-ujjwal-mishras-projects-8b666590.vercel.app/api/generate");
+      await fetch("https://backend-2et4o31dp-ujjwal-mishras-projects-8b666590.vercel.app/api/generate");
       alert('Video generation started!');
     } catch (err) {
       alert('Failed to trigger generation');

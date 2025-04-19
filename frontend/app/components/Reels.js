@@ -1,53 +1,66 @@
-'use client';
-import { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+const API_URL = "https://backend-2et4o31dp-ujjwal-mishras-projects-8b666590.vercel.app/api/videos";
 
 export default function Reels() {
   const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/videos`)
-      .then((res) => {
+    const fetchVideos = async () => {
+      try {
+        console.log("📡 Fetching from:", API_URL);
+        const res = await fetch(API_URL);
+
+        console.log("📥 Raw response:", res);
+
         if (!res.ok) {
-          throw new Error(`API error ${res.status}`);
+          const text = await res.text();
+          console.error("❌ Failed to fetch videos:", res.status, text);
+          setError(`Status: ${res.status}, ${text}`);
+          return;
         }
-        return res.json();
-      })
-      .then((data) => {
+
+        const data = await res.json();
+        console.log("✅ Fetched videos:", data);
         setVideos(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Failed to fetch videos:', err);
-        setLoading(false);
-      });
+      } catch (err) {
+        console.error("🔥 Network error:", err);
+        setError(err.message);
+      }
+    };
+
+    fetchVideos();
   }, []);
 
+  if (error) {
+    return (
+      <div className="text-red-500 text-center mt-10">
+        ❌ Error fetching videos: {error}
+      </div>
+    );
+  }
+
+  if (videos.length === 0) {
+    return <div className="text-center mt-10 text-gray-600">⏳ Loading videos...</div>;
+  }
+
   return (
-    <div className="w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
-      {loading ? (
-        <p className="text-center text-gray-400 py-10">Loading reels...</p>
-      ) : videos.length === 0 ? (
-        <p className="text-center text-gray-400 py-10">No videos found.</p>
-      ) : (
-        videos.map((video) => (
-          <div
-            key={video.id}
-            className="h-screen snap-start flex items-center justify-center bg-black"
-          >
-            <video
-              src={video.videoUrl}
-              controls
-              autoPlay
-              loop
-              muted
-              className="h-full w-auto max-w-full object-cover"
-            />
-          </div>
-        ))
-      )}
+    <div className="flex flex-col items-center gap-6 py-8">
+      {videos.map((video) => (
+        <div key={video.id} className="w-full max-w-sm">
+          <video
+            src={video.videoUrl}
+            controls
+            loop
+            className="w-full h-[500px] object-cover rounded-2xl"
+          />
+          <p className="mt-2 text-center text-white font-semibold">
+            {video.description}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
