@@ -9,7 +9,7 @@ const dynamo = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION 
 export default async function handler(req, res) {
   // ✅ CORS headers
   res.setHeader("Access-Control-Allow-Origin", "https://football-reels-app.vercel.app"); // or use "*" to allow all origins
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   // ✅ Handle preflight requests
