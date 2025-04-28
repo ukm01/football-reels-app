@@ -46,3 +46,28 @@ This project showcases AI automation for creative storytelling with real-time AP
 - Smooth integration of multiple AI services
 - Serverless deployment with full S3/DynamoDB backend
 - Real-time dynamic video generation with secure API design
+
+Summary of Key Issues and Resolutions
+1. Tailwind CSS Setup Issues
+•	• Initial setup repeatedly failed due to 'npx tailwindcss init -p' not working properly.
+•	• Resolution: Recreated the Next.js app using create-next-app with Tailwind CSS option selected. Confirmed Tailwind works out of the box in this mode and avoided unnecessary manual setup.
+2. GitHub Submodule Issue (Frontend)
+•	• Frontend was initialized as a Git submodule, preventing it from showing in GitHub and Vercel.
+•	• Resolution: Removed the .git directory inside frontend, ran 'git rm --cached frontend', then added frontend again using 'git add frontend'.
+3. Backend Deployment and 401/404 Errors
+•	• Even after successful deployment, backend API was throwing 401 or 404 errors.
+•	• Cause: Missing environment variables in deployed backend or authorization issues from Vercel's side.
+•	• Resolution: Ensured .env variables are present and correct in Vercel’s backend project settings, then redeployed.
+4. Environment Variable Not Working in Frontend
+•	• Frontend failed to use deployed backend URL and threw 404 or 401 errors.
+•	• Resolution: Added environment variables to Vercel’s frontend project settings and redeployed after ensuring code used `process.env.NEXT_PUBLIC_API_BASE_URL`.
+5. RunwayML Content Generation Pipeline
+•	• RunwayML video generation worked, but merging with audio using FFmpeg failed initially.
+•	• Resolution: Installed FFmpeg locally, verified path setup, and wrapped merging code with try-catch block.
+6. Final Frontend Deployment Stuck to Wrong Path
+•	• Repeated deployment attempts failed due to incorrect root path being set as 'frontend/frontend'.
+•	• Resolution: Removed `.vercel` folder from frontend, re-ran `vercel` CLI with correct settings and new unique project name.
+7. Misleading Authentication Redirect (Vercel 401 Error)
+•	• Got 401 error that looked like backend auth issue but was due to Vercel project scope mismatch.
+•	• Resolution: Logged out from Vercel CLI, re-logged in, selected correct personal scope (not project team), and re-deployed frontend.
+
